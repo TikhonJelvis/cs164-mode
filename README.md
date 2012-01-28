@@ -9,3 +9,5 @@ It provides syntax highlighting, basic indentation and a command for running the
 ## Installation
 
 Put `cs164-mode.el` somewhere in your load path and add `(require 'cs164-mode)` to your `.emacs` file.
+
+It should now be used automatically for files with a `.164` extension. If it isn't turned on automatically, try turning it on manually: `M-x cs164-mode`.
