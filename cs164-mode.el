@@ -5,6 +5,8 @@
 ;; By: Tikhon Jelvis
 (require 'generic-x)
 
+(defvar cs164-run-command "python main.py")
+
 (defvar cs164-mode-syntax-table
   (let ((table (make-syntax-table)))
     (modify-syntax-entry ?' "\"'" table)
@@ -12,7 +14,19 @@
     table))
 
 (defvar cs164-mode-map (make-keymap))
-; (define-key cs164-mode-map (kbd "C-c C-l") 'cs164-run-file)
+(define-key cs164-mode-map (kbd "C-c C-l") 'cs164-run-file)
+
+(defun cs164-run-file ()
+  (interactive)
+  (let ((file-name (buffer-file-name)))
+    (pop-to-buffer "*cs164*")
+    (unless (eq major-mode 'shell-mode) 
+      (shell (current-buffer)))
+    (sleep-for 0 100)
+    (delete-region (point-min) (point-max))
+    (message "This is the buffer file name: %s." file-name)
+    (comint-simple-send (get-buffer-process (current-buffer)) 
+                        (concat cs164-run-command " " file-name))))
 
 (defun line-matchesp (regexp offset)
   "Return t if line matches regular expression REGEXP.  The 
