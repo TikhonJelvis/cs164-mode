@@ -16,6 +16,11 @@ spaces when you press <tab>. This probably won't work if it's
 negative."
   :group 'cs164
   :type 'integer)
+(defcustom cs164-indent-automatically t
+  "If this is t, indents whenever you press RET or type a closing
+brace (}). Otherwise behaves as normal."
+  :group 'cs164
+  :type 'integer)
 (defcustom cs164-clear-shell-output t
   "If this is nil, cs164-run-file and cs164-parse-file will not
 clear the old output in the *164* shell buffer."
@@ -61,6 +66,8 @@ to the parser if you just want the AST of your code."
 (defvar cs164-mode-map (make-keymap))
 (define-key cs164-mode-map (kbd "C-c C-l") 'cs164-run-file)
 (define-key cs164-mode-map (kbd "C-c C-p") 'cs164-parse-file)
+(define-key cs164-mode-map (kbd "RET") 'cs164-condition-indent)
+(define-key cs164-mode-map (kbd "}") 'cs164-electric-brace)
 
 (defun cs164-run-command-on-file (command)
   (let ((file-name (buffer-file-name)))
@@ -82,6 +89,21 @@ to the parser if you just want the AST of your code."
   (interactive)
   (cs164-run-command-on-file (cs164-parse-command)))
 
+(defun cs164-condition-indent ()
+  "Indents if automatic indentation is on."
+  (interactive)
+  (newline)
+  (if cs164-indent-automatically
+      (cs164-indent-line)))
+
+(defun cs164-electric-brace ()
+  "Inserts a } and indents if automatic indentation is on."
+  (interactive)
+  (insert "}")
+  (if cs164-indent-automatically
+      (progn (cs164-indent-line)
+             (forward-char))))
+  
 (defun line-matchesp (regexp offset)
   "Return t if line matches regular expression REGEXP.  The 
 selected line is chosen by applying OFFSET as a numeric 
