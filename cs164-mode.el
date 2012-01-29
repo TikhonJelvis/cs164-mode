@@ -5,7 +5,23 @@
 ;; By: Tikhon Jelvis
 (require 'generic-x)
 
-(defvar cs164-run-command "python main.py")
+(defgroup cs164 nil
+  "Customization variables for the glorious cs164 language mode."
+  :version "23.3.1")
+
+(defcustom cs164-python-command "python"
+  "This is the command used to launch python to run your files."
+  :group 'cs164
+  :type '(string))
+(defcustom cs164-interpreter "main.py" 
+  "This is the file that will be passed to python when you run a
+.164 file. Set this to an absolute path if you want to run .164
+files in a directory different directory from your interpreter."
+  :group 'cs164
+  :type '(string))
+
+(defun cs164-run-command ()
+  (concat cs164-python-command " " cs164-interpreter))
 
 (defvar cs164-mode-syntax-table
   (let ((table (make-syntax-table)))
@@ -24,9 +40,8 @@
       (shell (current-buffer)))
     (sleep-for 0 100)
     (delete-region (point-min) (point-max))
-    (message "This is the buffer file name: %s." file-name)
     (comint-simple-send (get-buffer-process (current-buffer)) 
-                        (concat cs164-run-command " " file-name))))
+                        (concat (cs164-run-command) " " file-name))))
 
 (defun line-matchesp (regexp offset)
   "Return t if line matches regular expression REGEXP.  The 
