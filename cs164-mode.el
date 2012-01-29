@@ -139,7 +139,7 @@ point currently is on, and the associated indentation rules."
     "ite"
     "lambda")
   ;; font-lock-list
-  '(("\\b[0-9]+\\b\\|null" . font-lock-constant-face)
+  '(("\\b\\([0-9]+\\|null\\)\\b" . font-lock-constant-face)
     ("[-+*/!=<>]+" . font-lock-builtin-face)
     ("def \\([_a-zA-Z0-9]+\\)" 1 'font-lock-variable-name-face))
   ;; auto-mode-list
