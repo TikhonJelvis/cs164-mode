@@ -16,11 +16,15 @@ It should now be used automatically for files with a `.164` extension. If it isn
 
 You can customize this mode using `M-x customize-group` `cs164`.
 
-The number of spaces used to indent can be changed; it is 4 by default. 
+There are two options for indentation:
+
+  * You can set how many spaces to indent by; this is 4 by default.
+  * You can toggle automatic indentation. With it on, code will be indented each time you enter a newline or type a `}`.
 
 The commands used to run your program can also be changed:
 
   * If you are using a custom version of python, you need to change the python command used.
   * If you want to use your interpreter from any directory, change the base directory to an absolute path containing your main.py file (e.g. `~/Documents/164/cs164sp12/pa1/`).
+  * You can also change the interpreter and parser files, but this should not be necessary unless you're doing something completey nonstandard.
 
 You can also change whether the output from old run and parse commands is cleared by new ones.
