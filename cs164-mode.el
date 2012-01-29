@@ -9,6 +9,13 @@
   "Customization variables for the glorious cs164 language mode."
   :version "23.3.1")
 
+(defcustom cs164-basic-offset 4
+  "This is the default size of one indentation. Code in
+blocks (like after an if statement) will be indented by this many
+spaces when you press <tab>. This probably won't work if it's
+negative."
+  :group 'cs164
+  :type 'integer)
 (defcustom cs164-python-command "python"
   "This is the command used to launch python to run your files."
   :group 'cs164
@@ -141,7 +148,6 @@ point currently is on, and the associated indentation rules."
   '((lambda () 
       (set-syntax-table cs164-mode-syntax-table)
       (set (make-local-variable 'indent-line-function) 'cs164-indent-line)
-      (set (make-local-variable 'cs164-basic-offset) 4)
       (use-local-map cs164-mode-map))))
 
 (provide 'cs164-mode)
