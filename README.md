@@ -6,6 +6,8 @@ It provides syntax highlighting, basic indentation and a command for running the
 
 `C-c C-l` runs the file you are currently editing with your interpreter.
 
+`C-c C-p` runs your file through the parser, outputting a nicely formatted AST.
+
 ## Installation
 
 Put `cs164-mode.el` somewhere in your load path and add `(require 'cs164-mode)` to your `.emacs` file.
