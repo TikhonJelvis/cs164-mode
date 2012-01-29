@@ -14,4 +14,11 @@ It should now be used automatically for files with a `.164` extension. If it isn
 
 ## Customization
 
-By default, `C-c C-l` runs your file with the command `python main.py <file>.` However, this means it will only work if the file you're running is in the same directory as your interpreter. Happily, you can customize this behavior using `M-x customize-group` `cs164`. Here you can change both the `python` command (if you're using a special version of python) and the `main.py` if you want to put an absolute path for it instead. With an absolute path (e.g. `~/Documents/cs/164/main.py`) you should be able to run `.164` files from any directory.
+You can customize this mode using `M-x customize-group` `cs164`.
+
+The number of spaces used to indent can be changed; it is 4 by default.
+
+The commands used to run your program can also be changed:
+
+  * If you are using a custom version of python, you need to change the python command used.
+  * If you want to use your interpreter from any directory, change the interpreter from `main.py` to an absolute path like `~/Documents/cs/164/main.py`.
