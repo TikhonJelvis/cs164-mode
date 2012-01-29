@@ -16,19 +16,36 @@ spaces when you press <tab>. This probably won't work if it's
 negative."
   :group 'cs164
   :type 'integer)
+(defcustom cs164-base-directory ""
+  "This is the directory that contains your main.py file. It
+should also contain rparse.py. If it is a blank string, all file
+paths will be relative; this means you will only be able to run
+.164 files from the same directory as your interpreter."
+  :group 'cs164
+  :type 'integer)
 (defcustom cs164-python-command "python"
   "This is the command used to launch python to run your files."
   :group 'cs164
   :type '(string))
 (defcustom cs164-interpreter "main.py" 
-  "This is the file that will be passed to python when you run a
-.164 file. Set this to an absolute path if you want to run .164
-files in a directory different directory from your interpreter."
+  "This is the python file that runs your interpreter."
+  :group 'cs164
+  :type '(string))
+(defcustom cs164-parser "rparse.py"
+  "This is the file containing the parser for the language."
+  :group 'cs164
+  :type '(string))
+(defcustom cs164-grammar "cs164a.grm"
+  "This file describes the grammar of the language. It is passed
+to the parser if you just want the AST of your code."
   :group 'cs164
   :type '(string))
 
 (defun cs164-run-command ()
-  (concat cs164-python-command " " cs164-interpreter))
+  (concat cs164-python-command " " cs164-base-directory cs164-interpreter))
+
+(defun cs164-parse-command ()
+  (concat cs164-python-command " " cs164-base-directory cs164-parser " -r " cs164-grammar " < "))
 
 (defvar cs164-mode-syntax-table
   (let ((table (make-syntax-table)))
@@ -38,9 +55,9 @@ files in a directory different directory from your interpreter."
 
 (defvar cs164-mode-map (make-keymap))
 (define-key cs164-mode-map (kbd "C-c C-l") 'cs164-run-file)
+(define-key cs164-mode-map (kbd "C-c C-p") 'cs164-parse-file)
 
-(defun cs164-run-file ()
-  (interactive)
+(defun cs164-run-command-on-file (command)
   (let ((file-name (buffer-file-name)))
     (pop-to-buffer "*cs164*")
     (unless (eq major-mode 'shell-mode) 
@@ -48,7 +65,15 @@ files in a directory different directory from your interpreter."
     (sleep-for 0 100)
     (delete-region (point-min) (point-max))
     (comint-simple-send (get-buffer-process (current-buffer)) 
-                        (concat (cs164-run-command) " " file-name))))
+                        (concat command " " file-name))))
+
+(defun cs164-run-file ()
+  (interactive)
+  (cs164-run-command-on-file (cs164-run-command)))
+
+(defun cs164-parse-file ()
+  (interactive)
+  (cs164-run-command-on-file (cs164-parse-command)))
 
 (defun line-matchesp (regexp offset)
   "Return t if line matches regular expression REGEXP.  The 
