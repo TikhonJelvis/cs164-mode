@@ -16,30 +16,35 @@ spaces when you press <tab>. This probably won't work if it's
 negative."
   :group 'cs164
   :type 'integer)
+(defcustom cs164-clear-shell-output t
+  "If this is nil, cs164-run-file and cs164-parse-file will not
+clear the old output in the *164* shell buffer."
+  :group 'cs164
+  :type 'boolean)
 (defcustom cs164-base-directory ""
   "This is the directory that contains your main.py file. It
 should also contain rparse.py. If it is a blank string, all file
 paths will be relative; this means you will only be able to run
 .164 files from the same directory as your interpreter."
   :group 'cs164
-  :type 'integer)
+  :type 'string)
 (defcustom cs164-python-command "python"
   "This is the command used to launch python to run your files."
   :group 'cs164
-  :type '(string))
+  :type 'string)
 (defcustom cs164-interpreter "main.py" 
   "This is the python file that runs your interpreter."
   :group 'cs164
-  :type '(string))
+  :type 'string)
 (defcustom cs164-parser "rparse.py"
   "This is the file containing the parser for the language."
   :group 'cs164
-  :type '(string))
+  :type 'string)
 (defcustom cs164-grammar "cs164a.grm"
   "This file describes the grammar of the language. It is passed
 to the parser if you just want the AST of your code."
   :group 'cs164
-  :type '(string))
+  :type 'string)
 
 (defun cs164-run-command ()
   (concat cs164-python-command " " cs164-base-directory cs164-interpreter))
@@ -63,15 +68,17 @@ to the parser if you just want the AST of your code."
     (unless (eq major-mode 'shell-mode) 
       (shell (current-buffer)))
     (sleep-for 0 100)
-    (delete-region (point-min) (point-max))
+    (if cs164-clear-shell-output (delete-region (point-min) (point-max)))
     (comint-simple-send (get-buffer-process (current-buffer)) 
                         (concat command " " file-name))))
 
 (defun cs164-run-file ()
+  "Runs the current 164 file using your interpreter."
   (interactive)
   (cs164-run-command-on-file (cs164-run-command)))
 
 (defun cs164-parse-file ()
+  "Passes the current 164 file into rparse.py to get a pretty AST."
   (interactive)
   (cs164-run-command-on-file (cs164-parse-command)))
 
