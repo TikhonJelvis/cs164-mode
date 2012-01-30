@@ -101,8 +101,10 @@ to the parser if you just want the AST of your code."
   (interactive)
   (insert "}")
   (if cs164-indent-automatically
-      (progn (cs164-indent-line)
-             (forward-char))))
+      (progn (if (current-line-matchesp "[ \t]*}[ \t]*")
+                 (cs164-indent-line))
+             (if (equal (char-after) ?})
+                 (forward-char)))))
   
 (defun line-matchesp (regexp offset)
   "Return t if line matches regular expression REGEXP.  The 
