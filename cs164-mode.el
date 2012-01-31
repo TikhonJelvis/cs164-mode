@@ -20,7 +20,7 @@ negative."
   "If this is t, indents whenever you press RET or type a closing
 brace (}). Otherwise behaves as normal."
   :group 'cs164
-  :type 'integer)
+  :type 'boolean)
 (defcustom cs164-clear-shell-output t
   "If this is nil, cs164-run-file and cs164-parse-file will not
 clear the old output in the *164* shell buffer."
@@ -32,7 +32,7 @@ should also contain rparse.py. If it is a blank string, all file
 paths will be relative; this means you will only be able to run
 .164 files from the same directory as your interpreter."
   :group 'cs164
-  :type 'string)
+  :type 'directory)
 (defcustom cs164-python-command "python"
   "This is the command used to launch python to run your files."
   :group 'cs164
