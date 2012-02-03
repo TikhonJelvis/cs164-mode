@@ -1,5 +1,7 @@
 # cs164-mode
 
+The mode has been updated for pa2! To upgrade, just replace your old `cs164-mode.el` file with a current copy, then go to your `.emacs` file and enter `M-x eval-buffer` (this reloads your `.emacs` file).
+
 This is a simple mode for the cs164 language we're implementing in class.
 
 It provides syntax highlighting, basic indentation and a command for running the file.
