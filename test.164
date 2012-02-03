@@ -1,0 +1,40 @@
+print "This is just a file that tests the emacs mode's capabilities."
+print "It isn't valid and won't run. Oh well."
+
+def func(a, b, c) {
+    c = a + b
+    def x = 0
+    while (x < c) {
+        x = x + 1
+        for x in iter(x) {
+            print x
+        }
+    }
+}
+
+def co(lim) {
+    def _x = 0
+    while (_x < lim) {
+        yield _x
+        _x = _x + 1
+    }
+    null
+}
+
+print "This is a string!"
+print 'This is also a string.'
+print "Quotes \" can be escaped in the mode." 
+print "They can't be in the real language, but that's just because"
+print "the real language sucks. Disallowing escapes would be annoying."
+
+def routine = coroutine(co)
+resume(co)
+
+lambda (x) {ite(x, 1, 2)}
+
+x = {
+    a : b
+    c : d
+}
+
+len(x)
