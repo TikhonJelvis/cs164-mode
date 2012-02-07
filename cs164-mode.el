@@ -45,7 +45,7 @@ paths will be relative; this means you will only be able to run
   "This is the file containing the parser for the language."
   :group 'cs164
   :type 'string)
-(defcustom cs164-grammar "cs164b.grm"
+(defcustom cs164-grammar "cs164a.grm"
   "This file describes the grammar of the language. It is passed
 to the parser if you just want the AST of your code."
   :group 'cs164
@@ -59,8 +59,9 @@ to the parser if you just want the AST of your code."
 
 (defvar cs164-mode-syntax-table
   (let ((table (make-syntax-table)))
+    (modify-syntax-entry ?# "< " table)
+    (modify-syntax-entry ?\n "> " table)
     (modify-syntax-entry ?' "\"'" table)
-    (modify-syntax-entry ?\n "> b" table)
     (modify-syntax-entry ?\" "\"'" table)
     table))
 
@@ -195,10 +196,6 @@ point currently is on, and the associated indentation rules."
     "error"
     "ite"
     "lambda"
-    "null"
-    "len"
-    "coroutine"
-    "resume"
     "yield")
   ;; font-lock-list
   '(("\\b\\([0-9]+\\|null\\)\\b" . font-lock-constant-face)
@@ -209,6 +206,8 @@ point currently is on, and the associated indentation rules."
   ;; function-list
   '((lambda () 
       (set-syntax-table cs164-mode-syntax-table)
+      (setq comment-start "//")
+      (setq comment-end "\n")
       (set (make-local-variable 'indent-line-function) 'cs164-indent-line)
       (use-local-map cs164-mode-map))))
 
