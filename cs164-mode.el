@@ -206,8 +206,6 @@ point currently is on, and the associated indentation rules."
   ;; function-list
   '((lambda () 
       (set-syntax-table cs164-mode-syntax-table)
-      (setq comment-start "//")
-      (setq comment-end "\n")
       (set (make-local-variable 'indent-line-function) 'cs164-indent-line)
       (use-local-map cs164-mode-map))))
 
